@@ -5,3 +5,43 @@
 # id = "GHSA-xxxx-xxxx-xxxx"
 # ignoreUntil = 2026-12-31
 # reason = "Ranjiva funkcija se ne koristi; nadogradnja čeka Spring Boot 3.5.x"
+
+# --- Spring Boot 3.5.16 (zadnje OSS izdanje 3.5, bez podrške od 30. 6. 2026.) ---
+# Tomcat je podignut na 10.1.61 (pom.xml, tomcat.version). Za Spring Framework 6.2 i Jackson iz Boota 3.5
+# nema OSS zakrpe unutar 3.5: rješenje je migracija na Spring Boot 4.1 (Dependabot PR #4) – registar rizika R-02.
+# Iznimke vrijede do roka migracije; nakon roka vrata ponovno padaju i odluku treba obnoviti ili provesti migraciju.
+
+[[IgnoredVulns]]
+id = "GHSA-j9f9-w8pj-32f8"
+ignoreUntil = 2027-01-31
+reason = "spring-webmvc 6.2.19: SSE i renderiranje fragmenata (FragmentsRendering) aplikacija ne koristi. R-02, migracija na Boot 4.1."
+
+[[IgnoredVulns]]
+id = "GHSA-pc63-qcmh-9cmg"
+ignoreUntil = 2027-01-31
+reason = "spring-webmvc 6.2.19: XsltView aplikacija ne koristi (nema XSLT prikaza). R-02, migracija na Boot 4.1."
+
+[[IgnoredVulns]]
+id = "GHSA-7hhh-6rmp-j9qf"
+ignoreUntil = 2027-01-31
+reason = "jackson-core 2.21.4: DoS pri neispravnom JSON-u; utjecaj samo na dostupnost (R-06). Ispravak s Boot 4.1 (R-02)."
+
+[[IgnoredVulns]]
+id = "GHSA-p6pp-m3f8-5c89"
+ignoreUntil = 2027-01-31
+reason = "jackson-core 2.21.4: ReDoS u provjeri broja; utjecaj samo na dostupnost (R-06). Ispravak s Boot 4.1 (R-02)."
+
+[[IgnoredVulns]]
+id = "GHSA-cxp5-3px4-pw24"
+ignoreUntil = 2027-01-31
+reason = "jackson-databind 2.21.4: DoS (forward reference); aplikacija ne koristi @JsonIdentityInfo. Ispravak s Boot 4.1 (R-02)."
+
+[[IgnoredVulns]]
+id = "GHSA-q4xh-88c3-wmh7"
+ignoreUntil = 2027-01-31
+reason = "jackson-databind 2.21.4: DoS pri parsiranju Duration/XMLGregorianCalendar; API ne prima ta polja. Ispravak s Boot 4.1 (R-02)."
+
+[[IgnoredVulns]]
+id = "GHSA-wv8q-qhhj-9h54"
+ignoreUntil = 2027-01-31
+reason = "jackson-databind 2.21.4: zadržavanje nepoznatih ID-jeva tipova; aplikacija ne koristi polimorfnu deserijalizaciju. Ispravak s Boot 4.1 (R-02)."
