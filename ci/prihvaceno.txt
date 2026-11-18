@@ -25,9 +25,3 @@ spotbugs | SQL_INJECTION_SPRING_JDBC | LijecnikController.java | STUPCI.get(sort
 # S05: zabrana DOCTYPE je u metodi tvornica(); Find Security Bugs ne prati poziv druge metode pa javlja XXE i u popravljenom kodu.
 # Iznimka bez odsječka vrijedi i za ranjivi kod – zato regresiju čuva vlastito Semgrep pravilo java-xxe-documentbuilderfactory-bez-zabrane-doctype.
 spotbugs | XXE_DOCUMENT | UvozTermina.java | | tvornica() postavlja disallow-doctype-decl; regresiju hvata ci/semgrep/regresije.yml
-# Platforma T2 (Spring Boot 3.5.7, listopad 2025): ranjivosti objavljene nakon izdanja u tranzitivnim ovisnostima.
-# Pravo rješenje je nadogradnja Spring Boota (Dependabot PR) – izvan opsega ovog testa koji ne mijenja T2 predložak.
-osv | * | org.apache.tomcat.embed:* | | platforma Spring Boot 3.5.7 – rješava nadogradnja Spring Boota (Dependabot)
-osv | * | com.fasterxml.jackson.core:* | | platforma Spring Boot 3.5.7 – rješava nadogradnja Spring Boota (Dependabot)
-osv | * | org.springframework:* | | platforma Spring Boot 3.5.7 – rješava nadogradnja Spring Boota (Dependabot)
-osv | * | org.springframework.boot:* | | platforma Spring Boot 3.5.7 – rješava nadogradnja Spring Boota (Dependabot)

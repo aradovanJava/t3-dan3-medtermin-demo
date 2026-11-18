@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.7</version>
+        <version>3.5.16</version>
         <relativePath/>
     </parent>
 
@@ -19,6 +19,9 @@
 
     <properties>
         <java.version>21</java.version>
+        <!-- Tomcat 10.1 je i dalje podržan: zakrpa iznad verzije iz Spring Boota 3.5.16 (zadnje OSS izdanje 3.5).
+             Ukloniti kad prijeđemo na Spring Boot 4.x (registar rizika R-02). -->
+        <tomcat.version>10.1.61</tomcat.version>
         <jacoco.version>0.8.13</jacoco.version>
     </properties>
 
