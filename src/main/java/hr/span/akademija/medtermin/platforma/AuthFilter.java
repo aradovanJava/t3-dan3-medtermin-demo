@@ -22,6 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class AuthFilter extends OncePerRequestFilter {
 
     public static final String ATRIBUT = AuthFilter.class.getName() + ".korisnik";
+    public static final String ATRIBUT_TOKEN = AuthFilter.class.getName() + ".token";
     public static final String KOLACIC = "SESSION";
 
     private final TokenStore tokeni;
@@ -40,6 +41,7 @@ public class AuthFilter extends OncePerRequestFilter {
         PrijavljeniKorisnik korisnik = tokeni.korisnik(token);
         if (korisnik != null) {
             request.setAttribute(ATRIBUT, korisnik);
+            request.setAttribute(ATRIBUT_TOKEN, token);
         }
         chain.doFilter(request, response);
     }

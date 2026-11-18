@@ -24,11 +24,14 @@ public class ResetLozinkeService {
     private final JdbcTemplate jdbc;
     private final KorisnikService korisnici;
     private final PostaService posta;
+    private final TokenStore tokeni;
 
-    public ResetLozinkeService(JdbcTemplate jdbc, KorisnikService korisnici, PostaService posta) {
+    public ResetLozinkeService(JdbcTemplate jdbc, KorisnikService korisnici, PostaService posta,
+                               TokenStore tokeni) {
         this.jdbc = jdbc;
         this.korisnici = korisnici;
         this.posta = posta;
+        this.tokeni = tokeni;
     }
 
     public void zatrazi(String username) {
@@ -62,7 +65,9 @@ public class ResetLozinkeService {
         if (iskoristeno != 1) {
             return false;
         }
-        korisnici.promijeniLozinku((String) zapis.get("username"), novaLozinka);
+        String username = (String) zapis.get("username");
+        korisnici.promijeniLozinku(username, novaLozinka);
+        tokeni.opozoviSve(username);   // N-01: stari tokeni (možda ukradeni) više ne vrijede
         return true;
     }
 
