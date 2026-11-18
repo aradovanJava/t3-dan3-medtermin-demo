@@ -3,10 +3,15 @@ package hr.span.akademija.medtermin.platforma;
 import hr.span.akademija.medtermin.platforma.KorisnikService.Korisnik;
 import hr.span.akademija.medtermin.platforma.KorisnikService.PrijavaZahtjev;
 import hr.span.akademija.medtermin.platforma.KorisnikService.RegistracijaZahtjev;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class AuthController {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthController.class);
 
     private final KorisnikService korisnici;
     private final TokenStore tokeni;
@@ -48,6 +55,18 @@ public class AuthController {
         Korisnik k = korisnik.get();
         String token = tokeni.izdaj(k.prijavljeni());
         return ResponseEntity.ok(Map.of("token", token, "username", k.username(), "uloga", k.uloga()));
+    }
+
+    /** N-01: odjava opoziva token (zaglavlje ili kolačić) i briše kolačić SESSION. */
+    @PostMapping("/auth/odjava")
+    public ResponseEntity<Void> odjava(PrijavljeniKorisnik korisnik, HttpServletRequest request) {
+        if (request.getAttribute(AuthFilter.ATRIBUT_TOKEN) instanceof String token) {
+            tokeni.opozovi(token);
+        }
+        log.info("Odjava korisnika {}", korisnik.username());
+        ResponseCookie obrisi = ResponseCookie.from(AuthFilter.KOLACIC, "")
+                .httpOnly(true).sameSite("Lax").path("/").maxAge(0).build();
+        return ResponseEntity.noContent().header(HttpHeaders.SET_COOKIE, obrisi.toString()).build();
     }
 
     @PostMapping("/auth/register")
