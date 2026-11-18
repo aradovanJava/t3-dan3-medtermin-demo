@@ -25,11 +25,11 @@ STRIDE po elementu (Microsoft SDL): vanjski entitet → S, R · proces → S, T,
 | D1 Baza | T, I | SQL injection u sortiranju (S08) | mapa dopuštenih stupaca i smjerova; Semgrep + SpotBugs (uska iznimka s odsječkom) | – |
 | D1 Baza | I | OIB u čistom tekstu, nešifrirane kopije baze | Dan 2: šifriranje stupca, TDE, šifrirane kopije – još nije primijenjeno u produkciji | [R-09](registar-rizika.md#r-09) |
 | D1 Baza | E | Aplikacija se spaja kao `sa` ili `db_owner` | Dan 2: `uloga_aplikacija`, minimalne ovlasti, RLS – još nije primijenjeno u produkciji | [R-09](registar-rizika.md#r-09) |
-| D2 Dokumenti nalaza | I | Path traversal kod preuzimanja (S02) | ime datoteke iz baze + normalizirana putanja; Semgrep, `NalaziFunkcionalniTest` | – |
+| D2 Dokumenti nalaza | I | Path traversal kod preuzimanja (S02) | ime datoteke iz baze + normalizirana putanja – `S02PathTraversalTest` | – |
 | D3 Log | I | Lozinka i OIB u logu (S12) | lozinka se ne logira, OIB maskiran – `S12LogiranjeTest` | – |
 | D3 Log | R, T | Log se može izmijeniti ili obrisati; nema zapisa tko je čitao nalaz | – | [R-06](registar-rizika.md#r-06) |
 | D4 Sesije | D | Ponovno pokretanje poslužitelja odjavljuje sve korisnike | odluka dizajna za jednu instancu ([sigurnosna-pravila.md](sigurnosna-pravila.md#sesija)); pri skaliranju zajedničko spremište | – |
-| F1/F2 preglednik ↔ API | I | CORS reflektira bilo koji Origin (S04) | popis origina iz konfiguracije; ZAP kuka + Semgrep, `CorsFunkcionalniTest` | – |
+| F1/F2 preglednik ↔ API | I | CORS reflektira bilo koji Origin (S04) | popis origina iz konfiguracije – `S04CorsTest`; ZAP kuka u DAST-u | – |
 | F1/F2 preglednik ↔ API | I, T | Promet bez TLS-a; kolačić `SESSION` bez atributa `Secure` | TLS na reverse proxyju – izvan koda aplikacije | [R-08](registar-rizika.md#r-08) |
 | F9 e-pošta | S | Predvidljiv ili višekratni token za reset lozinke (S11) | 32 bajta iz `SecureRandom`, u bazi samo hash, 15 min, jednokratan – `PromjenaLozinkeFunkcionalniTest` | – |
 | F10 BIS | S, I | Lažni BIS ili presretanje poziva | – (u laboratoriju simulacija) | [R-08](registar-rizika.md#r-08) |

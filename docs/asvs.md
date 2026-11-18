@@ -21,7 +21,7 @@ Svaki ❌ i ⚠️ ima rizik u [registru](registar-rizika.md) ili je otvorena st
 | ASVS 5.0.0 | Zahtjev (skraćeno) | Status | Dokaz ili razlog |
 |---|---|---|---|
 | v5.0.0-1.2.1 | Kodiranje izlaza prema kontekstu (HTML …) | ✅ | `S09IspisXssTest` (S09); `HtmlUtils.htmlEscape` u `IspisController` |
-| v5.0.0-1.2.2 | Kodiranje nepouzdanih podataka u URL-ovima, samo sigurni protokoli | ✅ | `returnUrl` samo lokalni put (S03, `PrijavaObrascemFunkcionalniTest`); token u poveznici base64url |
+| v5.0.0-1.2.2 | Kodiranje nepouzdanih podataka u URL-ovima, samo sigurni protokoli | ✅ | `returnUrl` samo lokalni put – `src/test/java/hr/span/akademija/medtermin/sigurnost/S03OpenRedirectTest.java` (S03); token u poveznici base64url |
 | v5.0.0-1.2.3 | Kodiranje kod generiranja JavaScripta/JSON-a | ✅ | JSON isključivo preko Jacksona, nema ručnog sastavljanja |
 | v5.0.0-1.2.4 | Parametrizirani upiti (SQL injection) | ✅ | svi upiti s `?`; ORDER BY iz mape dopuštenih (S08) – Semgrep + SpotBugs u vratima |
 | v5.0.0-1.2.5 | Zaštita od OS command injectiona | ➖ | aplikacija ne poziva naredbe operacijskog sustava |
@@ -46,7 +46,7 @@ Svaki ❌ i ⚠️ ima rizik u [registru](registar-rizika.md) ili je otvorena st
 | v5.0.0-3.2.2 | Siguran prikaz teksta u klijentu (textContent …) | ➖ | nema klijentskog JavaScripta; HTML se generira na poslužitelju i kodira |
 | v5.0.0-3.3.1 | Kolačić s atributom Secure i prefiksom __Host-/__Secure- | ❌ | kolačić `SESSION` bez `Secure` i bez prefiksa – [R-08](registar-rizika.md#r-08) |
 | v5.0.0-3.4.1 | HSTS na svim odgovorima | ⚠️ | postavlja reverse proxy u produkciji, ne aplikacija – [R-08](registar-rizika.md#r-08) |
-| v5.0.0-3.4.2 | CORS samo za dopuštene origine | ✅ | popis iz `app.cors.allowed-origins` (S04); ZAP kuka i `CorsFunkcionalniTest` |
+| v5.0.0-3.4.2 | CORS samo za dopuštene origine | ✅ | popis iz `app.cors.allowed-origins` – `src/test/java/hr/span/akademija/medtermin/sigurnost/S04CorsTest.java` (S04); ZAP kuka u DAST-u |
 | v5.0.0-3.5.1 | Zaštita od zahtjeva s druge domene (CSRF) bez oslanjanja na preflight | ⚠️ | API traži token u zaglavlju; kolačić `SESSION` ima `SameSite=Lax`, ali nema provjere `Origin`/`Sec-Fetch-Site` |
 | v5.0.0-3.5.2 | Osjetljiva funkcija ne smije biti dostupna „jednostavnim“ zahtjevom | ⚠️ | JSON tijelo traži preflight; uz kolačić vrijedi napomena kod 3.5.1 |
 | v5.0.0-3.5.3 | Osjetljive radnje samo POST/PUT/DELETE, ne GET | ✅ | promjene stanja samo kroz POST i DELETE |
@@ -65,7 +65,7 @@ Svaki ❌ i ⚠️ ima rizik u [registru](registar-rizika.md) ili je otvorena st
 | v5.0.0-5.2.1 | Ograničena veličina datoteka koje aplikacija prima | ❌ | tijelo uvoza XML-a i YAML-a nema ograničenja – [R-07](registar-rizika.md#r-07) |
 | v5.0.0-5.2.2 | Provjera ekstenzije i sadržaja prenesenih datoteka | ➖ | nema prijenosa datoteka (XML/YAML stižu kao tijelo zahtjeva – 1.5.1) |
 | v5.0.0-5.3.1 | Generirane datoteke se ne izvode kao kod | ✅ | dokumenti su u `storage-dir`, izvan statičkih resursa |
-| v5.0.0-5.3.2 | Putanje iz pouzdanih podataka, ne iz korisnikova imena datoteke | ✅ | ime iz baze + normalizacija (S02), `NalaziFunkcionalniTest` |
+| v5.0.0-5.3.2 | Putanje iz pouzdanih podataka, ne iz korisnikova imena datoteke | ✅ | ime iz baze + normalizirana putanja – `src/test/java/hr/span/akademija/medtermin/sigurnost/S02PathTraversalTest.java` (S02) |
 
 ### V6 Authentication
 
