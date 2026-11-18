@@ -5,6 +5,7 @@ import hr.span.akademija.medtermin.platforma.JdbcPomoc;
 import hr.span.akademija.medtermin.platforma.PrijavljeniKorisnik;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import org.slf4j.Logger;
@@ -71,18 +72,15 @@ public class RezervacijaService {
         }
         log.info("Nova rezervacija: termin {}, korisnik {}, OIB {}", terminId, korisnik.username(),
                 maskirajOib(zahtjev.oib()));
-        int azurirano = jdbc.update(
-                "UPDATE termini SET zauzeto = zauzeto + 1 WHERE id = ? AND zauzeto < kapacitet", terminId);
-        if (azurirano == 0) {
+        Map<String, Object> termin = jdbc.queryForMap("SELECT kapacitet, zauzeto FROM termini WHERE id = ?", terminId);
+        int kapacitet = ((Number) termin.get("kapacitet")).intValue();
+        int zauzeto = ((Number) termin.get("zauzeto")).intValue();
+        if (zauzeto >= kapacitet) {
             throw new ApiException(HttpStatus.CONFLICT, "Nema slobodnih mjesta.");
         }
-        try {
-            String oznaka = bis.upisiURaspored(terminId, korisnik.username());
-            return spremi(zahtjev, korisnik, oznaka);
-        } catch (RuntimeException e) {
-            jdbc.update("UPDATE termini SET zauzeto = zauzeto - 1 WHERE id = ?", terminId);
-            throw e;
-        }
+        String oznaka = bis.upisiURaspored(terminId, korisnik.username());
+        jdbc.update("UPDATE termini SET zauzeto = zauzeto + 1 WHERE id = ?", terminId);
+        return spremi(zahtjev, korisnik, oznaka);
     }
 
     @Transactional
