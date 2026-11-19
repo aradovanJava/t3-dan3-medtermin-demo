@@ -22,7 +22,7 @@ Pokazuju se Actions, Summary vrata, PR-ovi, testovi i dokumenti u `docs/`.
 | 1 Predložak u repozitorij | prvi commit: T2 projekt + mapa `java/` iz paketa (s `.github` i `.semgrepignore`) | Commits → prvi commit |
 | 2 Prvo pokretanje | zeleno, ali uz **30 prihvaćenih SCA nalaza** – opće iznimke `osv \| * \| org.apache.tomcat.embed:*` | [prvo pokretanje](https://github.com/aradovanJava/t3-dan3-medtermin-demo/actions/runs/44382947605) → Summary |
 | 3 Ovisnosti | [PR #11](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/11): bez općih iznimki → **13 blokirajućih** ([crveno](https://github.com/aradovanJava/t3-dan3-medtermin-demo/actions/runs/44384161534)); Spring Boot 3.5.16 + Tomcat 10.1.61 → ostalo 7 → privremene iznimke s rokom u `osv-scanner.toml` → [zeleno](https://github.com/aradovanJava/t3-dan3-medtermin-demo/actions/runs/44385250360) | PR, `osv-scanner.toml` |
-| 3 Dependabot | 10 PR-ova odmah nakon prvog pusha, 4 ne prolaze vrata; [PR #4](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/4) (Spring Boot 4.1.2) **ne prolazi** – velika verzija je migracija, ne klik | Pull requests |
+| 3 Dependabot | 10 PR-ova odmah nakon prvog pusha, 2 ne prolaze vrata: [PR #4](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/4) (Spring Boot 4.1 – Jackson 3 mijenja pakete, testovi se ne prevode: velika verzija je migracija, ne klik) i [PR #8](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/8) (novi SpotBugs nalazi novi obrazac u `CorsFilter` – nova verzija alata, novi nalazi) | Pull requests |
 | 4 Tajne i iznimke | `ci/prihvaceno.txt`: iznimke s **odsječkom** (S08), objašnjenje zašto je XXE iznimka široka i što je čuva | datoteka |
 | 5 DAST s prijavom | `ci/dast-putanje.txt` – svi GET endpointi MedTermina | datoteka, artefakt `izvjestaj-dast` |
 | 6 Dokaz pada | [PR #13](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/13): vraćen S06 → **SCA i Semgrep** blokiraju; [PR #14](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/14): vraćen S10 → **svi alati zeleni**, pada samo test (10 × 201 od 10 zahtjeva) | PR → Checks → Summary |
@@ -31,7 +31,7 @@ Pokazuju se Actions, Summary vrata, PR-ovi, testovi i dokumenti u `docs/`.
 
 Pitanja za polaznike: *Zašto su opće iznimke iz prvog pokretanja opasne?* (skrile bi i novu ranjivost u Tomcatu)
 · *Što kad iznimci istekne rok?* (vrata ponovno padaju – odluka se mora obnoviti) · *Zašto Dependabot PR nije
-automatski siguran?* (vrata ga provjeravaju kao svaki drugi kod; četiri od deset ne prolaze).
+automatski siguran?* (vrata ga provjeravaju kao svaki drugi kod; dva od deset ne prolaze).
 
 ## Blok 2 · Ispitivanje (slajdovi 8–13)
 
@@ -91,6 +91,8 @@ Pitanje: *Zašto R-04 (seed račun `admin`) ima postupanje „izbjeći“, a ne 
 - Novo zeleno pokretanje: Actions → *devsecops* → **Run workflow** na `main`.
 - Crvena pokretanja ostaju u PR-ovima [PR #13](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/13), [PR #14](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/14) i u prvom commitu [PR #12](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/12).
 - Dependabot tjedno otvara nove PR-ove – nakon nastave ih možete zatvoriti ili spojiti one koji prolaze.
+- Kad se pokrene mnogo poslova odjednom, Maven Central zna vratiti HTTP 429 i Build padne bez veze s kodom –
+  u pokretanju kliknite **Re-run failed jobs**.
 - Provjera *Pregled ovisnosti u PR-u* u svakom PR-u je crvena: dependency review u privatnom repozitoriju
   traži GitHub Advanced Security. Posao ima `continue-on-error` i ne utječe na vrata – recite to prije nego što
   netko pita.

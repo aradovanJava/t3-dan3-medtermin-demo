@@ -47,7 +47,8 @@ U = 3 (zdravstveni podaci). **Zatvoreno:** [PR #12](https://github.com/aradovanJ
 predloška skrivale su 30 visokih nalaza; nadogradnja na 3.5.16 svela ih je na 13, a Tomcat 10.1.61 na 7. Za tih 7
 (Spring Framework 6.2, Jackson) zakrpe unutar 3.5 nema. Za svaki je u `osv-scanner.toml` zapisano koristi li aplikacija ranjivu funkciju i rok
 **31. 1. 2027.** – nakon roka vrata ponovno padaju. Pravo rješenje je migracija na Spring Boot 4.1: Dependabot je
-otvorio [PR #4](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/4), ali vrata na njemu ne prolaze (Spring Boot 4 mijenja module i API-je), pa je to zaseban posao.
+otvorio [PR #4](https://github.com/aradovanJava/t3-dan3-medtermin-demo/pull/4), ali vrata na njemu ne prolaze (Spring Boot 4 donosi Jackson 3 s novim paketima `tools.jackson` – testovi se ne
+prevode), pa je to zaseban posao.
 
 ### R-03
 **Pogađanje lozinke.** Prijetnja: S (E1). Ranjivost: CWE-307 (nalaz N-02, WSTG-ATHN-03). Registracija je otvorena,
